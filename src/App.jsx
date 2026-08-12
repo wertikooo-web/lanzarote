@@ -20,7 +20,7 @@ const chapters = [
 
 function Poster({src, eyebrow, title, subtitle, id}){
   return <section className="poster" id={id}>
-    <img src={src} alt="" onError={(e)=>e.currentTarget.parentElement.classList.add('missing')}/>
+    <img src={src} alt=""/>
     <div className="shade"/>
     <div className="posterCopy"><span>{eyebrow}</span><h2>{title}</h2><p>{subtitle}</p></div>
   </section>
@@ -28,10 +28,12 @@ function Poster({src, eyebrow, title, subtitle, id}){
 
 function App(){
   return <main>
-    <nav><a href="#top">LANZAROTE</a><div><a href="#route">МАРШРУТ</a><a href="#price">СТОИМОСТЬ</a><a href="#join">ПОЕХАЛИ</a></div></nav>
+    <nav><a href="#top">LANZAROTE</a><div><a href="#route">МАРШРУТ</a><a href="#places">МЕСТА</a><a href="#price">СТОИМОСТЬ</a><a href="#join">ПОЕХАЛИ</a></div></nav>
+
     <header className="hero" id="top">
       <img src="/images/lanzarote-cover.png" alt="Lanzarote"/>
-      <div className="grain"/><div className="heroMeta"><b>АВТОРСКОЕ ПУТЕШЕСТВИЕ</b><span>КАНАРСКИЕ ОСТРОВА</span></div>
+      <div className="grain"/>
+      <div className="heroMeta"><b>АВТОРСКОЕ ПУТЕШЕСТВИЕ</b><span>КАНАРСКИЕ ОСТРОВА</span></div>
       <div className="scroll">ЛИСТАЙТЕ ЖУРНАЛ ↓</div>
     </header>
 
@@ -43,7 +45,13 @@ function App(){
 
     <Poster src="/images/la-graciosa.png" eyebrow="DAY 05 / LA GRACIOSA" title="ОСТРОВ, КОТОРЫЙ НИКУДА НЕ СПЕШИТ" subtitle="Полчаса на пароме, и ритм становится совсем другим."/>
 
-    <section className="chapters"><div className="folio">03 / МЕСТА</div>{chapters.map((c,i)=><article className="chapter" key={c.key}><div className="chapterImage"><img src={c.image} alt={c.kicker}/><div className="imagePlaceholder"><b>{c.kicker}</b><span>POSTER {String(i+1).padStart(2,'0')}</span><small>добавьте {c.image.replace('/images/','')} в public/images</small></div></div><div className="chapterCopy"><span>{c.kicker}</span><h2>{c.title.split('\n').map((x,j)=><span key={j}>{x}<br/></span>)}</h2><p>{c.text}</p></div></article>)}</section>
+    <section className="chapters" id="places">
+      <div className="folio">03 / МЕСТА</div>
+      {chapters.map((c,i)=><article className={`chapter ${i % 2 ? 'reverse' : ''}`} key={c.key}>
+        <div className="chapterImage"><img src={c.image} alt={c.kicker}/><div className="posterIndex">0{i+1}</div></div>
+        <div className="chapterCopy"><div className="pageMeta"><span>{c.kicker}</span><span>{String(i+1).padStart(2,'0')} / {String(chapters.length).padStart(2,'0')}</span></div><h2>{c.title.split('\n').map((x,j)=><span key={j}>{x}<br/></span>)}</h2><p>{c.text}</p><div className="rule"/></div>
+      </article>)}
+    </section>
 
     <section className="mapSection"><div className="folio">04 / КАРТА</div><div className="mapGrid"><div><h2>МАРШРУТ<br/>ПО ОСТРОВУ</h2><p>Север, западное побережье, вулканический юг и маленькая La Graciosa. На Лансароте расстояния небольшие, поэтому за неделю остров складывается в цельную историю.</p></div><div className="islandMap" aria-label="Стилизованная карта маршрута"><svg viewBox="0 0 520 720"><path className="island" d="M300 25 C350 80 338 145 390 195 C435 238 405 300 430 355 C452 405 420 462 380 500 C344 536 354 596 310 675 C276 712 230 677 214 632 C194 575 150 554 140 500 C127 430 93 398 115 335 C135 279 176 255 190 199 C207 130 245 69 300 25Z"/><path className="track" d="M302 78 C282 160 353 209 314 286 C272 363 363 407 310 485 C271 543 258 594 280 646"/><g className="pins"><circle cx="302" cy="78" r="8"/><text x="320" y="84">ÓRZOLA / LA GRACIOSA</text><circle cx="326" cy="206" r="8"/><text x="344" y="212">JAMEOS</text><circle cx="223" cy="285" r="8"/><text x="80" y="291">FAMARA</text><circle cx="309" cy="386" r="8"/><text x="327" y="392">LA GERIA</text><circle cx="272" cy="500" r="8"/><text x="112" y="506">TIMANFAYA</text><circle cx="257" cy="576" r="8"/><text x="105" y="582">EL GOLFO</text></g></svg><div className="graciosaDot">LA GRACIOSA</div></div></div></section>
 
